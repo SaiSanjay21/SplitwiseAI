@@ -24,11 +24,10 @@ export const groupMembers = pgTable("group_members", {
 export const bills = pgTable("bills", {
   id: serial("id").primaryKey(),
   groupId: integer("group_id").notNull(),
-  amount: integer("amount").notNull(),
-  description: text("description").notNull(),
-  createdBy: integer("created_by").notNull(),
-  splits: jsonb("splits").notNull(),
+  total: integer("total").notNull(),
+  splits: jsonb("splits").notNull().$type<{userId: number, amount: number}[]>(),
   receiptUrl: text("receipt_url"),
+  createdAt: text("created_at").notNull(),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
@@ -40,16 +39,9 @@ export const insertGroupSchema = createInsertSchema(groups).pick({
   name: true,
 });
 
-export const insertGroupMemberSchema = createInsertSchema(groupMembers).pick({
-  groupId: true,
-  userId: true,
-  symbol: true,
-});
-
 export const insertBillSchema = createInsertSchema(bills).pick({
   groupId: true,
-  amount: true,
-  description: true,
+  total: true,
   splits: true,
   receiptUrl: true,
 });

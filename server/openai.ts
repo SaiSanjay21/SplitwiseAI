@@ -1,21 +1,33 @@
 import OpenAI from "openai";
 
+// the newest OpenAI model is "gpt-4o" which was released May 13, 2024
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-export async function analyzeReceipt(base64Image: string): Promise<{
-  totalAmount: number;
-  items: Array<{ description: string; amount: number; symbol?: string }>;
+export async function processReceipt(base64Image: string, symbols: string[]): Promise<{
+  total: number;
+  splits: Array<{ symbol: string; amount: number }>;
 }> {
   const response = await openai.chat.completions.create({
     model: "gpt-4o",
     messages: [
       {
+        role: "system",
+        content: `You are a receipt processing assistant. Analyze the receipt image and extract:
+1. The total amount
+2. Find items marked with these symbols: ${symbols.join(", ")}
+3. Calculate the sum for each symbol
+Return the results in JSON format with this structure:
+{
+  "total": number,
+  "splits": [{ "symbol": string, "amount": number }]
+}`
+      },
+      {
         role: "user",
         content: [
           {
             type: "text",
-            text: "Analyze this receipt image. Extract the total amount and identify any symbols (like *, #, @, etc.) next to items. Return the data in JSON format with fields: totalAmount and items (array with description, amount, and optional symbol for each item)."
+            text: "Process this receipt and extract the marked items."
           },
           {
             type: "image_url",
