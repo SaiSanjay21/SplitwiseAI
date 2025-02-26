@@ -9,6 +9,11 @@ async function throwIfResNotOk(res: Response) {
   }
 }
 
+function getAuthHeader() {
+  const token = localStorage.getItem("jwt_token");
+  return token ? `Bearer ${token}` : "";
+}
+
 export async function apiRequest(
   method: string,
   url: string,
@@ -19,9 +24,9 @@ export async function apiRequest(
     headers: {
       ...(data ? { "Content-Type": "application/json" } : {}),
       "Accept": "application/json",
+      "Authorization": getAuthHeader(),
     },
     body: data ? JSON.stringify(data) : undefined,
-    credentials: "include",
   });
 
   await throwIfResNotOk(res);
@@ -35,9 +40,9 @@ export const getQueryFn: <T>(options: {
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
     const res = await fetch(`${API_BASE_URL}${queryKey[0]}`, {
-      credentials: "include",
       headers: {
         "Accept": "application/json",
+        "Authorization": getAuthHeader(),
       }
     });
 
