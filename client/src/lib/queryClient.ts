@@ -35,6 +35,7 @@ export async function apiRequest(
         "Authorization": getAuthHeader(),
       },
       body: data ? JSON.stringify(data) : undefined,
+      credentials: 'include'
     });
 
     await throwIfResNotOk(res);
@@ -56,7 +57,8 @@ export const getQueryFn: <T>(options: {
         headers: {
           "Accept": "application/json",
           "Authorization": getAuthHeader(),
-        }
+        },
+        credentials: 'include'
       });
 
       if (unauthorizedBehavior === "returnNull" && res.status === 401) {

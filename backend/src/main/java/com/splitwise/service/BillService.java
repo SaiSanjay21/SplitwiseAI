@@ -26,6 +26,7 @@ public class BillService {
     private final BillRepository billRepository;
     private final GroupRepository groupRepository;
     private final GroupService groupService;
+    private final UserService userService;
     private final OpenAiService openAiService;
 
     @Value("${openai.api-key}")
@@ -81,7 +82,7 @@ public class BillService {
         for (Split split : request.splits()) {
             BillSplit billSplit = new BillSplit();
             billSplit.setBill(bill);
-            billSplit.setUser(groupService.getUserById(split.userId()));
+            billSplit.setUser(userService.getUserById(split.userId()));
             billSplit.setAmount(split.amount());
             splits.add(billSplit);
         }

@@ -24,12 +24,13 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRequest request) {
         User user = userService.createUser(request.getUsername(), request.getPassword());
-        String token = tokenProvider.generateToken(user.getId());
-        
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getId(), null, null);
+        String token = tokenProvider.generateToken(authentication);
+
         Map<String, Object> response = new HashMap<>();
         response.put("token", token);
         response.put("user", user);
-        
+
         return ResponseEntity.ok(response);
     }
 
