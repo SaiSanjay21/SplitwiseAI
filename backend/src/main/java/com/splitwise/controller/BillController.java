@@ -1,6 +1,8 @@
 package com.splitwise.controller;
 
 import com.splitwise.model.Bill;
+import com.splitwise.model.BillRequest;
+import com.splitwise.model.Split;
 import com.splitwise.service.BillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,3 @@ public class BillController {
         return ResponseEntity.ok(billService.getGroupBills(groupId));
     }
 }
-
-record BillRequest(Double total, List<Split> splits) {}
-record Split(Long userId, Double amount) {}
