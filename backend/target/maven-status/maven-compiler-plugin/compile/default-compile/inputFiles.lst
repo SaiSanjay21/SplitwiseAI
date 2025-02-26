@@ -1,8 +1,10 @@
 /home/runner/workspace/backend/src/main/java/com/splitwise/repository/GroupMemberRepository.java
 /home/runner/workspace/backend/src/main/java/com/splitwise/controller/AuthController.java
+/home/runner/workspace/backend/src/main/java/com/splitwise/model/Split.java
 /home/runner/workspace/backend/src/main/java/com/splitwise/model/GroupMember.java
 /home/runner/workspace/backend/src/main/java/com/splitwise/repository/BillRepository.java
 /home/runner/workspace/backend/src/main/java/com/splitwise/security/UserPrincipal.java
+/home/runner/workspace/backend/src/main/java/com/splitwise/model/BillRequest.java
 /home/runner/workspace/backend/src/main/java/com/splitwise/security/JwtTokenProvider.java
 /home/runner/workspace/backend/src/main/java/com/splitwise/repository/UserRepository.java
 /home/runner/workspace/backend/src/main/java/com/splitwise/repository/GroupRepository.java

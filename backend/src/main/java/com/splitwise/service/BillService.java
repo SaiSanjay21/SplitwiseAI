@@ -1,14 +1,14 @@
 package com.splitwise.service;
 
-import com.splitwise.controller.BillRequest;
-import com.splitwise.controller.Split;
 import com.splitwise.model.Bill;
+import com.splitwise.model.BillRequest;
+import com.splitwise.model.Split;
 import com.splitwise.model.BillSplit;
 import com.splitwise.model.Group;
 import com.splitwise.model.GroupMember;
 import com.splitwise.repository.BillRepository;
 import com.splitwise.repository.GroupRepository;
-import com.theokanning.openai.OpenAiService;
+import com.theokanning.openai.service.OpenAiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -36,10 +36,10 @@ public class BillService {
         try {
             Group group = groupRepository.findById(groupId)
                     .orElseThrow(() -> new RuntimeException("Group not found"));
-            
+
             List<GroupMember> members = groupService.getGroupMembers(groupId);
             String base64Image = Base64.getEncoder().encodeToString(receiptFile.getBytes());
-            
+
             // Process receipt with OpenAI (implementation needed)
             // This would call the OpenAI API to analyze the receipt
             // For now, we'll create a dummy bill
@@ -48,7 +48,7 @@ public class BillService {
             bill.setTotal(100.0); // Replace with actual total from OpenAI
             bill.setCreatedAt(LocalDateTime.now());
             bill.setReceiptUrl(base64Image);
-            
+
             List<BillSplit> splits = new ArrayList<>();
             // Create equal splits for testing
             Double splitAmount = bill.getTotal() / members.size();
@@ -60,7 +60,7 @@ public class BillService {
                 splits.add(split);
             }
             bill.setSplits(splits);
-            
+
             return billRepository.save(bill);
         } catch (Exception e) {
             throw new RuntimeException("Failed to process receipt: " + e.getMessage());

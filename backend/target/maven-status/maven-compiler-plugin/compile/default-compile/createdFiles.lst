@@ -1,0 +1,8 @@
+com/splitwise/security/UserPrincipal.class
+com/splitwise/repository/BillRepository.class
+com/splitwise/model/Group.class
+com/splitwise/model/Bill.class
+com/splitwise/model/User.class
+com/splitwise/model/Split.class
+com/splitwise/model/GroupMember.class
+com/splitwise/model/BillSplit.class
