@@ -2,6 +2,7 @@ package com.splitwise.controller;
 
 import com.splitwise.model.User;
 import com.splitwise.security.JwtTokenProvider;
+import com.splitwise.security.UserPrincipal;
 import com.splitwise.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRequest request) {
         User user = userService.createUser(request.getUsername(), request.getPassword());
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getId(), null, null);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, null);
         String token = tokenProvider.generateToken(authentication);
 
         Map<String, Object> response = new HashMap<>();
@@ -51,7 +52,7 @@ public class AuthController {
     }
 }
 
-record UserRequest(String username, String password) {
+record UserRequest(String username, String password)  {
     public String getUsername() { return username; }
     public String getPassword() { return password; }
 }

@@ -10,7 +10,10 @@ import com.splitwise.repository.BillRepository;
 import com.splitwise.repository.GroupRepository;
 import com.theokanning.openai.service.OpenAiService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,14 +26,18 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BillService {
+    @Autowired
     private final BillRepository billRepository;
+    @Autowired
     private final GroupRepository groupRepository;
+    @Autowired
     private final GroupService groupService;
+    @Autowired
     private final UserService userService;
-    private final OpenAiService openAiService;
+    //@Autowired
+   // private final OpenAiService openAiService;
 
-    @Value("${openai.api-key}")
-    private String openaiApiKey;
+    
 
     @Transactional
     public Bill processReceipt(Long groupId, MultipartFile receiptFile) {
