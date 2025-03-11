@@ -5,6 +5,7 @@ import com.splitwise.model.BillRequest;
 import com.splitwise.model.Split;
 import com.splitwise.service.BillService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequestMapping("/api/groups/{groupId}/bills")
 @RequiredArgsConstructor
 public class BillController {
+    @Autowired
     private final BillService billService;
 
     @PostMapping
