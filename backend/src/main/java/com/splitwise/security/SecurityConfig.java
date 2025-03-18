@@ -47,7 +47,7 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/auth/**") // Disable CSRF for public endpoints
+                        .ignoringRequestMatchers("/api/auth/**", "/api/item/**") // Disable CSRF for public endpoints
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth

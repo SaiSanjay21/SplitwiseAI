@@ -1,5 +1,6 @@
 package com.splitwise.security;
 
+import com.splitwise.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +17,7 @@ public class JwtTokenProvider {
     private int jwtExpirationInMs;
 
     public String generateToken(Authentication authentication) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        var userPrincipal = (User) authentication.getPrincipal();
         return generateTokenFromUserId(userPrincipal.getId());
     }
 
